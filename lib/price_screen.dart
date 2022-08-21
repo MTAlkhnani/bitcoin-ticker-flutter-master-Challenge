@@ -13,7 +13,9 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   CoinDataModel coinDataModel = CoinDataModel();
-  String currPrice = '';
+  String btcPrice = '';
+  String ethPrice = '';
+  String adaPrice = '';
 
   @override
   void initState() {
@@ -26,11 +28,13 @@ class _PriceScreenState extends State<PriceScreen> {
     CoinDataModel coinDataModel = CoinDataModel();
     var coinData = await coinDataModel.getCoinData();
     setState(() {
-      if (coinData != null)
-        currPrice = coinData[0]['current_price'].toString();
-      else {
+      if (coinData != null) {
+        btcPrice = coinData[0]['current_price'].toString();
+        ethPrice = coinData[1]['current_price'].toString();
+        adaPrice = coinData[7]['current_price'].toString();
+      } else {
         //print(coinData[0]['current_price'].toString());
-        currPrice = '0';
+        btcPrice = '0';
       }
     });
   }
@@ -98,16 +102,45 @@ class _PriceScreenState extends State<PriceScreen> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                child: Text(
-                  '1 BTC = $currPrice $selectedCurrency',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
+              child: Column(
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                    child: Text(
+                      '1 BTC = $btcPrice $selectedCurrency',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                    child: Text(
+                      '1 ETH = $ethPrice $selectedCurrency',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
+                    child: Text(
+                      '1 ADA = $adaPrice $selectedCurrency',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
